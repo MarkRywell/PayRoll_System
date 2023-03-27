@@ -24,5 +24,6 @@ class EmployeeSeeder extends Seeder
         // ];
 
         Employee::factory(1)->create(["email" => 'markgaje@gmail.com', "password" => Hash::make('mark123'), "name" => 'Mark Gaje', 'role_id' => 1, "status" => true]);
+        
     }
 }
