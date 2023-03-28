@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -56,9 +57,41 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        
-    }
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'Authentication Failed',
+            'data' => null
+        ];
 
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            return response($responseData, 400);
+        }
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $employee = $request->user();
+
+            $employee->tokens()->delete();
+            
+            $responseData = [
+                'status' => 'success',
+                'message' => 'Successful Login',
+                'data' => [
+                    'token' => $employee->createToken(Auth::user())->plainTextToken
+                ]
+            ];
+            return response($responseData, 200);
+        }
+
+        return response($responseData, 400);
+    }
 
 
 
