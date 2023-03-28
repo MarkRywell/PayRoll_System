@@ -54,6 +54,11 @@ class AuthController extends Controller
         return response()->json($responseData, 201);
     }
 
+    public function login(Request $request)
+    {
+        
+    }
+
 
 
 
