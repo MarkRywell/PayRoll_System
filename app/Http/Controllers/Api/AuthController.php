@@ -39,7 +39,7 @@ class AuthController extends Controller
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
-            'role' => 'Employee',
+            'role_id' => 2,
             'status' => true
         ]);
 
@@ -68,15 +68,18 @@ class AuthController extends Controller
             'password' => 'required|string'
         ]);
 
+        
         if ($validator->fails()) {
             $responseData['message'] = $validator->errors()->first();
             return response($responseData, 400);
         }
 
-        $credentials = $request->only('email', 'password');
+    
+        $credentials = request(['email', 'password']);
 
         if (Auth::attempt($credentials)) {
-            $employee = $request->user();
+
+            $employee = $request->employee();
 
             $employee->tokens()->delete();
             
@@ -84,7 +87,7 @@ class AuthController extends Controller
                 'status' => 'success',
                 'message' => 'Successful Login',
                 'data' => [
-                    'token' => $employee->createToken(Auth::user())->plainTextToken
+                    'token' => $employee->createToken(Auth::employee())->plainTextToken
                 ]
             ];
             return response($responseData, 200);
