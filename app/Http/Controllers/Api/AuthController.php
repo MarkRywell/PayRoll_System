@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -35,7 +36,7 @@ class AuthController extends Controller
 
         
 
-        $employee = Employee::create([
+        $employee = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
@@ -79,7 +80,7 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            $employee = $request->employee();
+            $employee = $request->user();
 
             $employee->tokens()->delete();
             
@@ -87,7 +88,7 @@ class AuthController extends Controller
                 'status' => 'success',
                 'message' => 'Successful Login',
                 'data' => [
-                    'token' => $employee->createToken(Auth::employee())->plainTextToken
+                    'token' => $employee->createToken(Auth::user())->plainTextToken
                 ]
             ];
             return response($responseData, 200);
