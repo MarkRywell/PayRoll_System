@@ -2,8 +2,11 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmployeeController;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Utils\Helper;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +24,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/', [EmployeeController::class, 'index']);
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('/dashboard', function() {
+        return Helper::authDecode(Auth::user());
+    });
+});
+
+Route::get('/unauthorized', function () {
+    return response([
+        'status' => 'error',
+        'message' => 'Unauthorized'
+    ], 404);
+})->name('unauthorized');
+
+
+Route::get('/', [UserController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
