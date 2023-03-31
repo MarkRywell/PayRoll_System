@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/dashboard', function() {
         return Helper::authDecode(Auth::user());
     });
+
+    Route::delete('/softDelete/{id}', [UserController::class, 'softDelete']);
 });
 
 Route::get('/unauthorized', function () {
