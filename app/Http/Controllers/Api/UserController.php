@@ -139,8 +139,28 @@ class UserController extends Controller
             }
             $responseData['message'] = 'Soft Delete Unsuccessful';
         }
-
-
         return response($responseData, 400);
+    }
+
+    public function restore(int $id)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'User not found',
+            'data' => null
+        ];
+        
+        $user = User::withTrashed()->find($id);
+        
+        if($user)
+        {   
+            $user->restore();
+            User::where('id', $id)->update(['status' => true]);
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'User successfully Restored';
+            return response($responseData, 200);
+        }
+
+        return response($responseData, 404);
     }
 }
