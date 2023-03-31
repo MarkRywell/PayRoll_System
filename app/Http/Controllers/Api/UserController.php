@@ -98,38 +98,49 @@ class UserController extends Controller
         return response($responseData);
     }
 
-    public function softDelete(int $id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(int $id)
     {
         $responseData = [
             'status' => 'fail',
-            'message' => '',
+            'message' => 'User not found',
             'data' => null
         ];
 
         
-        User::where('id', $id)->update(['status' => false]);
-        $user = User::findOrFail($id);
-        $status = $user->delete();
+        $user = User::withTrashed()->find($id);
 
-        if($status) {
-            $responseData = [
-                'status' => 'success',
-                'message' => 'User successfully Soft Deleted!',
-                'data' => null
-            ];
+        if($user)
+        {
+            if($user->trashed())
+            {
+                $user->forceDelete();
+                $responseData = [
+                    'status' => 'success',
+                    'message' => 'User successfully Deleted!',
+                    'data' => null
+                ];
 
-            return response($responseData, 200);
+                return response($responseData, 200);
+                
+            }
+            User::where('id', $id)->update(['status' => false]);
+            $status = $user->delete();
+            if($status) {
+                $responseData = [
+                    'status' => 'success',
+                    'message' => 'User successfully Soft Deleted!',
+                    'data' => null
+                ];
+    
+                return response($responseData, 200);
+            }
+            $responseData['message'] = 'Soft Delete Unsuccessful';
         }
-        $responseData['message'] = 'Soft Delete Unsuccessful';
+
 
         return response($responseData, 400);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user)
-    {
-        //
     }
 }
