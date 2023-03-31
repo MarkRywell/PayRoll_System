@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         return Helper::authDecode(Auth::user());
     });
 
-    Route::delete('/softDelete/{id}', [UserController::class, 'softDelete']);
+    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
 
     Route::get('/users/archives', [UserController::class, 'archives']);
 });
