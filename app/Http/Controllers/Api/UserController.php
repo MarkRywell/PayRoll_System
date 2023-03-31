@@ -17,6 +17,11 @@ class UserController extends Controller
         return User::all();
     }
 
+    public function archives()
+    {
+        return User::onlyTrashed()->orderBy('year', 'desc')->get();
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -64,7 +69,7 @@ class UserController extends Controller
         }
         
         $responseData['message'] = 'Photo Upload Unsuccessful';
-        return $responseData;
+        return response($responseData);
     }
 
     public function update(Request $request, int $id)
@@ -90,7 +95,33 @@ class UserController extends Controller
         }
         
         $responseData['message'] = 'Update Unsuccessful';
-        return $responseData;
+        return response($responseData);
+    }
+
+    public function softDelete(int $id)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $user = User::findOrFail($id);
+        
+        $status = $user->delete();
+
+        if($status) {
+            $responseData = [
+                'status' => 'success',
+                'message' => 'User successfully Soft Deleted!',
+                'data' => null
+            ];
+
+            return response($responseData, 200);
+        }
+        $responseData['message'] = 'Soft Delete Unsuccessful';
+
+        return response($responseData, 400);
     }
 
     /**
