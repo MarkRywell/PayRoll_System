@@ -31,6 +31,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
 
+    Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
+
     Route::get('/users/archives', [UserController::class, 'archives']);
 });
 
