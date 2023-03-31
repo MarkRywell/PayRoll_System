@@ -30,6 +30,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     Route::delete('/softDelete/{id}', [UserController::class, 'softDelete']);
+
+    Route::get('/users/archives', [UserController::class, 'archives']);
 });
 
 Route::get('/unauthorized', function () {
