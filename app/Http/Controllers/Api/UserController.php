@@ -19,7 +19,7 @@ class UserController extends Controller
 
     public function archives()
     {
-        return User::onlyTrashed()->orderBy('year', 'desc')->get();
+        return User::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
     }
 
     /**
@@ -106,8 +106,9 @@ class UserController extends Controller
             'data' => null
         ];
 
-        $user = User::findOrFail($id);
         
+        User::where('id', $id)->update(['status' => false]);
+        $user = User::findOrFail($id);
         $status = $user->delete();
 
         if($status) {
