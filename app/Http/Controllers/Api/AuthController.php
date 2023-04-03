@@ -14,88 +14,65 @@ use Illuminate\Support\Facades\Validator;
 class AuthController extends Controller
 {
 
+
+    public function constructor(){
+        $this->middleware('auth:api', ['except'=>['login','register']]);
+    }
+    
     public function register(Request $request)
     {
-        $responseData = [
-            'status' => 'fail',
-            'message' => '',
-            'data' => null
-        ];
-      
-        
+
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|string|unique:employees',
-            'password' => 'required|string|min:6',
-        ]);
+            'name'=>'required',
+            'email'=>'required|string|unique:users',
+            'password'=>'required|string|confirmed|min:6', 
+         ]);
+ 
+         if($validator->fails()){
+             return response()->json($validator->errors()->toJson(), 400);
+         }
+     
+
+
+        $user = User::create(array_merge(
+            $validator->validated(),
+            ['password'=>bcrypt($request->password)],
+            ['role_id' => 2],
+            ['status' => true] 
+         ));
+ 
         
-        if ($validator->fails()) {
-            $responseData['message'] = $validator->errors()->first();
-            
-            return response()->json($responseData, 400);
-        }
-
+        return response()->json([
+            'message'=> "User Sucessfully Registered",
+            "user"=>$user
+        ], 201);
         
-
-        $employee = User::create([
-            'name' => $request['name'],
-            'email' => $request['email'],
-            'password' => Hash::make($request['password']),
-            'role_id' => 2,
-            'status' => true
-        ]);
-
-        if ($employee == null)
-        {   
-            $responseData['message'] = 'Unsuccessful Registration';
-            return response()->json($responseData, 400);
-        }
-        
-        $responseData['status'] = 'success';
-        $responseData['message'] = 'Successful Registration';
-
-        return response()->json($responseData, 201);
     }
 
-    public function login(Request $request)
-    {
-        $responseData = [
-            'status' => 'fail',
-            'message' => 'Authentication Failed',
-            'data' => null
-        ];
-
+    public function login(Request $request){
         $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string'
+            'email'=>'required|email',
+            'password'=>'required|string|min:6', 
+
         ]);
 
-        
-        if ($validator->fails()) {
-            $responseData['message'] = $validator->errors()->first();
-            return response($responseData, 400);
+        if($validator->fails()){
+            return response()->json($validator->errors(), 422);
         }
-
-    
-        $credentials = request(['email', 'password']);
-
-        if (Auth::attempt($credentials)) {
-
-            $employee = $request->user();
-
-            $employee->tokens()->delete();
-            
-            $responseData = [
-                'status' => 'success',
-                'message' => 'Successful Login',
-                'data' => [
-                    'token' => $employee->createToken(Auth::user())->plainTextToken
-                ]
-            ];
-            return response($responseData, 200);
+        if(!$token=auth()->attempt($validator->validated())){
+            return response()->json(['error'=>'Unauthorized'], 401);
         }
+        return $this->newToken($token);
+    }
 
-        return response($responseData, 400);
+
+    public function newToken($token){
+        return response()->json([
+           'access_token'=>$token,
+           'token_type'=>'bearer',
+           'expires_in'=>auth()->factory()->getTTL()*60,
+           'user'=>auth()->user()
+        ]);
     }
 
     
