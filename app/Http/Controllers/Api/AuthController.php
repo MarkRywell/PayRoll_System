@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Nette\Utils\Json;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
         
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'email' => 'required|string|unique:employees',
+            'email' => 'required|string|unique:users',
             'password' => 'required|string|min:6',
         ]);
         
@@ -36,7 +37,7 @@ class AuthController extends Controller
 
         
 
-        $employee = User::create([
+        $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
@@ -44,7 +45,7 @@ class AuthController extends Controller
             'status' => true
         ]);
 
-        if ($employee == null)
+        if ($user == null)
         {   
             $responseData['message'] = 'Unsuccessful Registration';
             return response()->json($responseData, 400);
@@ -80,17 +81,20 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
 
-            $employee = $request->user();
+            $user = $request->user();
 
-            $employee->tokens()->delete();
+            $user->tokens()->delete();
             
             $responseData = [
                 'status' => 'success',
                 'message' => 'Successful Login',
                 'data' => [
-                    'token' => $employee->createToken(Auth::user())->plainTextToken
+                    'token' => $user->createToken(Auth::user())->plainTextToken,
                 ]
             ];
+
+            // print_r (Json::decode($user->tokens[0]->name)->role_id);
+
             return response($responseData, 200);
         }
 
