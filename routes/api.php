@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Utils\Helper;
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -24,16 +22,25 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+// Route::middleware('permission')->get('/role', function (Request $request) {
+    // 
+// });
+// 
+
 Route::group(['middleware' => 'auth:sanctum'], function () {
+
     Route::get('/dashboard', function() {
         return Helper::authDecode(Auth::user());
     });
 
-    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
+    Route::group(['middleware' => ['permission']], function () {
+        Route::post('/register', [AuthController::class, 'register']);
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
+        Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
+        Route::get('/users/archives', [UserController::class, 'archives']);
+    });
 
-    Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
 
-    Route::get('/users/archives', [UserController::class, 'archives']);
 });
 
 Route::get('/unauthorized', function () {
@@ -48,4 +55,4 @@ Route::get('/', [UserController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/register', [AuthController::class, 'register']);
+
