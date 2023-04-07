@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class PayRoll extends Model
 {
-    use HasFactory;
+    use HasApiTokens, SoftDeletes, HasFactory, Notifiable;
+
+    protected $fillable = [
+        'rate',
+        'month',
+        'working_days'
+        'salary'
+    ];
 }
