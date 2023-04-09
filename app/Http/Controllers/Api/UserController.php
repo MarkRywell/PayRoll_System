@@ -38,6 +38,30 @@ class UserController extends Controller
         
     }
 
+    public function getUser(Request $request)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'User not found',
+            'data' => null
+        ];
+
+        $user = DB::table('users')->where('role_id', $request['role_id'])->select('name', 'email', 'role_id', 'photo')->get();
+
+        if($user)
+        {
+
+            $responseData = [
+                'status' => 'success',
+                'message' => 'User retrieved succesfully',
+                'data' => $user
+            ];
+
+            return response($responseData, 200);
+        }
+        return response($responseData, 404);
+    }
+
     /**
      * Update the specified resource in storage.
      */
