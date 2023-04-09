@@ -49,7 +49,7 @@ Route::get('/unauthorized', function () {
         'message' => 'Unauthorized'
     ], 404);
 })->name('unauthorized');
-
+Route::get('/users/getUser/{role_id}', [UserController::class, 'getUser']);
 
 Route::get('/', [UserController::class, 'index']);
 
