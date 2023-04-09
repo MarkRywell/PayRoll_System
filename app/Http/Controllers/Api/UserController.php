@@ -46,7 +46,7 @@ class UserController extends Controller
             'data' => null
         ];
 
-        $user = DB::table('users')->where('role_id', $role_id)->select('name', 'email', 'role_id', 'photo')->get();
+        $user = DB::table('users')->where('role_id', $role_id)->select('id', 'name', 'email', 'role_id', 'photo')->get();
 
         if($user)
         {
