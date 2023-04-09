@@ -38,7 +38,7 @@ class UserController extends Controller
         
     }
 
-    public function getUser(Request $request)
+    public function getUser(int $role_id)
     {
         $responseData = [
             'status' => 'fail',
@@ -46,11 +46,10 @@ class UserController extends Controller
             'data' => null
         ];
 
-        $user = DB::table('users')->where('role_id', $request['role_id'])->select('name', 'email', 'role_id', 'photo')->get();
+        $user = DB::table('users')->where('role_id', $role_id)->select('name', 'email', 'role_id', 'photo')->get();
 
         if($user)
         {
-
             $responseData = [
                 'status' => 'success',
                 'message' => 'User retrieved succesfully',
