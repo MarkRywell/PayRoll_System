@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string("month");
             $table->integer('working_days');
             $table->double('salary', 8, 2);
+            $table->foreignId('user_id')->constrainted('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
