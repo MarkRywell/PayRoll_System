@@ -9,6 +9,10 @@ class PayRoll extends Model
 {
     use HasApiTokens, SoftDeletes, HasFactory, Notifiable;
 
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
+
     protected $fillable = [
         'rate',
         'month',
