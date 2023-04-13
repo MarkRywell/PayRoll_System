@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -104,12 +106,30 @@ class UserController extends Controller
             'data' => null
         ];
 
-        $response = DB::table('users')
-        ->where('id', $id)
-        ->update([
-            'name' => $request['name'],
-            'photo' => $request['photo']
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'password' => 'required|string|min:6',
         ]);
+        
+        if ($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            
+            return response()->json($responseData, 400);
+        }
+
+        $request['password'] = Hash::make($request['password']);
+
+        $data = array_filter($request->all());
+
+        $response = User::where('id', $id)->update($data);
+
+        // $response = DB::table('users')
+        // ->where('id', $id)
+        // ->update([
+        //     'name' => $request['name'],
+        //     'password' => $request['password'],
+        //     'photo' => $request['photo']
+        // ]);
 
         if($response != null)
         {
