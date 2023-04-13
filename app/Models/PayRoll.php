@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 class PayRoll extends Model
 {
     use HasApiTokens, SoftDeletes, HasFactory, Notifiable;
@@ -16,7 +18,7 @@ class PayRoll extends Model
     protected $fillable = [
         'rate',
         'month',
-        'working_days'
+        'working_days',
         'salary'
     ];
 }
