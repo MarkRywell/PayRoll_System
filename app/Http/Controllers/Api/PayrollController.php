@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\PayRoll;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\PayRoll;
 
 class PayrollController extends Controller
 {
@@ -21,7 +22,38 @@ class PayrollController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'PayRoll Unsuccessful',
+            'data' => null
+        ];
+
+        $validator = Validator::vmake($request->all(), [
+            'rate' => 'required|double',
+            'month' => 'required|string',
+            'working_days' => 'required|integer',
+            'user_id' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            return response()->json($responseData, 400);
+        }
+
+        $request['salary'] = $request['rate'] * $request['working_days'];
+
+        $payroll = PayRoll::createPayRoll($request);
+
+        if($payroll) {
+            $responseData = [
+                'status' => 'success',
+                'message' => 'PayRoll Created Successfully!',
+                'data' => $payroll
+            ];
+
+            return response()->json($responseData, 201);
+        }
+        return response()->json($responseData, 400);
     }
 
     /**
