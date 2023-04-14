@@ -28,8 +28,8 @@ class PayrollController extends Controller
             'data' => null
         ];
 
-        $validator = Validator::vmake($request->all(), [
-            'rate' => 'required|double',
+        $validator = Validator::make($request->all(), [
+            'rate' => 'required|numeric',
             'month' => 'required|string',
             'working_days' => 'required|integer',
             'user_id' => 'required'
@@ -41,6 +41,8 @@ class PayrollController extends Controller
         }
 
         $request['salary'] = $request['rate'] * $request['working_days'];
+
+        // var_dump($request);
 
         $payroll = PayRoll::createPayRoll($request);
 
