@@ -15,24 +15,35 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {   
-        $users = [
-            [
-                "email" => 'markgaje@gmail.com',
-                "password" => Hash::make('mark123'),
-                "name" => 'Mark Gaje',
-                "role_id" => 1,
-                "status" => true
-            ],
-            [
-                "email" => 'janri@gmail.com',
-                "password" => Hash::make('janri123'),
-                "name" => 'John Ray Canete',
-                "role_id" => 2,
-                "status" => true
-            ]
-            ];
+        User::create([
+            "email" => 'markgaje@gmail.com',
+            "password" => Hash::make('mark123'),
+            "name" => 'Mark Gaje',
+            "role_id" => 1,
+            "status" => true
+        ]);
+        
+        User::factory(5)->create(['role_id' => 2, 'status' => true]);
+        // $users = [
+        //     [
+                // "email" => 'markgaje@gmail.com',
+                // "password" => Hash::make('mark123'),
+                // "name" => 'Mark Gaje',
+                // "role_id" => 1,
+                // "status" => true
+        //     ],
+        //     [
+        //         "email" => 'janri@gmail.com',
+        //         "password" => Hash::make('janri123'),
+        //         "name" => 'John Ray Canete',
+        //         "role_id" => 2,
+        //         "status" => true
+        //     ]
+        //     ];
 
-            DB::table('users')->insert($users);
+        //     User::create($users);
+
+            // DB::table('users')->insert($users);
 
         // User::factory(1)->create(["email" => 'markgaje@gmail.com', "password" => Hash::make('mark123'), "name" => 'Mark Gaje', 'role_id' => 1, "status" => true]);
     }
