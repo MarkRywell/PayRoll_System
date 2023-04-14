@@ -44,6 +44,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/payroll/', [PayrollController::class, 'store']);
     });
 
+    Route::get('/payroll/{id}', [PayrollController::class, 'show']);
+
 
 });
 
