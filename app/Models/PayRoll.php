@@ -19,11 +19,14 @@ class PayRoll extends Model
         'rate',
         'month',
         'working_days',
-        'salary'
+        'salary',
+        'user_id'
     ];
 
     public static function createPayRoll($request)
-    {
+    {   
+        
+
         $payroll = PayRoll::create([
             'rate' => $request['rate'],
             'month' => $request['month'],
