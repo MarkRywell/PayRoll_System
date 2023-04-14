@@ -61,9 +61,9 @@ class PayrollController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PayRoll $payRoll)
+    public function show(int $user_id)
     {
-        //
+        return PayRoll::getPayRoll($user_id);
     }
 
     /**
