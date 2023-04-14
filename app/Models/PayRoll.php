@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 class PayRoll extends Model
 {
-    use HasApiTokens, SoftDeletes, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable;
 
     public function user() {
         return $this->belongsTo(User::class);
@@ -25,8 +25,6 @@ class PayRoll extends Model
 
     public static function createPayRoll($request)
     {   
-        
-
         $payroll = PayRoll::create([
             'rate' => $request['rate'],
             'month' => $request['month'],
@@ -34,6 +32,13 @@ class PayRoll extends Model
             'salary' => $request['salary'],
             'user_id' => $request['user_id']
         ]);
+
+        return $payroll;
+    }
+
+    public static function getPayRoll($user_id)
+    {
+        $payroll = PayRoll::where('user_id', $user_id);
 
         return $payroll;
     }
