@@ -123,14 +123,6 @@ class UserController extends Controller
 
         $response = User::where('id', $id)->update($data);
 
-        // $response = DB::table('users')
-        // ->where('id', $id)
-        // ->update([
-        //     'name' => $request['name'],
-        //     'password' => $request['password'],
-        //     'photo' => $request['photo']
-        // ]);
-
         if($response != null)
         {
             $responseData['status'] = 'success';
