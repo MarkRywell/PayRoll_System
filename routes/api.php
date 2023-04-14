@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Utils\Helper;
 use Illuminate\Http\Request;
@@ -39,6 +40,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
         Route::get('/users/archives', [UserController::class, 'archives']);
         Route::patch('/update/{id}', [UserController::class, 'update']);
+
+        Route::post('/payroll/', [PayrollController::class, 'store']);
     });
 
 
