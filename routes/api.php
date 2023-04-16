@@ -44,8 +44,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/payroll/', [PayrollController::class, 'store']);
     });
 
-    Route::get('/payroll/{id}', [PayrollController::class, 'show']);
 
+    Route::get('/payroll/{id}', [PayrollController::class, 'show']);
+    Route::get('/getUser/{role_id}', [UserController::class, 'getUser']);
 
 });
 
@@ -56,8 +57,7 @@ Route::get('/unauthorized', function () {
     ], 404);
 })->name('unauthorized');
 
-Route::get('/getUser/{role_id}', [UserController::class, 'getUser']);
-
 Route::get('/', [UserController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);
