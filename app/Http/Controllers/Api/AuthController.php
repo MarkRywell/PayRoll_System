@@ -101,6 +101,45 @@ class AuthController extends Controller
         return response($responseData, 400);
     }
 
+    public function logout(Request $request)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'Unsuccessful Logout',
+            'data' => null
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
+
+        
+        if ($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            return response($responseData, 400);
+        }
+
+        $credentials = request(['email', 'password']);
+
+        if (Auth::attempt($credentials)) {
+
+            $user = $request->user();
+
+            $user->tokens()->delete();
+            
+            $responseData = [
+                'status' => 'success',
+                'message' => 'Successful Logout',
+                'data' => null
+            ];
+
+            return response($responseData, 200);
+        }
+        
+        return response()->json($responseData, 400);
+    }
+
 
 
 
