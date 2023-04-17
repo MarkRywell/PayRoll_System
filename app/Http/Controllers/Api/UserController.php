@@ -35,9 +35,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Request $request)
     {
-        
+        $responseData = [
+            'status' => 'fail',
+            'message' => 'User not found',
+            'data' => null
+        ];
+
+        $user = User::find();
     }
 
     public function getUser(int $role_id)
