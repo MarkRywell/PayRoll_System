@@ -46,7 +46,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
 
     Route::get('/payroll/{id}', [PayrollController::class, 'show']);
-    Route::get('/getUser/{role_id}', [UserController::class, 'getUser']);
+    Route::get('/getUser', [UserController::class, 'getUser']);
 
 });
 
