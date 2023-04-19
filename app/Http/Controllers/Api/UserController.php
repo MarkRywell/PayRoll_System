@@ -46,7 +46,7 @@ class UserController extends Controller
         $user = User::find();
     }
 
-    public function getUser(int $role_id)
+    public function getUser(Request $request)
     {
         $responseData = [
             'status' => 'fail',
@@ -54,8 +54,14 @@ class UserController extends Controller
             'data' => null
         ];
 
-
-        $user = User::get(['id', 'name', 'email', 'role_id', 'photo'])->where('role_id', $role_id);
+        $user = $request->user();
+        
+        if($user->role_id == 1) {
+            $user = User::get(['id', 'name', 'email', 'role_id', 'photo']);
+        }
+        else {
+            $user = $user->only(['id', 'name', 'email', 'role_id', 'photo']);
+        }
         
         if($user)
         {
