@@ -15,11 +15,15 @@ class PayRoll extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function salary() {
+        return $this->hasOne(Salary::class);
+    }
+
     protected $fillable = [
         'rate',
         'month',
         'working_days',
-        'salary',
+        'total_hours_overtime',
         'user_id'
     ];
 
@@ -29,7 +33,7 @@ class PayRoll extends Model
             'rate' => $request['rate'],
             'month' => $request['month'],
             'working_days' => $request['working_days'],
-            'salary' => $request['salary'],
+            'total_hours_overtime' => $request['total_hours_overtime'],
             'user_id' => $request['user_id']
         ]);
 
