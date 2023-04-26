@@ -16,7 +16,7 @@ return new class extends Migration
             $table->double('rate', 6, 2);
             $table->string("month");
             $table->integer('working_days');
-            $table->double('salary', 8, 2);
+            $table->integer('total_hours_overtime');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
