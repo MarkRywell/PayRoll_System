@@ -19,11 +19,21 @@ class UserSeeder extends Seeder
             "email" => 'markgaje@gmail.com',
             "password" => Hash::make('mark123'),
             "name" => 'Mark Gaje',
+            "position" => 'CEO',
             "role_id" => 1,
             "status" => true
         ]);
+
+        User::create([
+            "email" => 'janri@gmail.com',
+            "password" => Hash::make('janri123'),
+            "name" => 'John Ray Canete',
+            "position" => 'Frontend Developer',
+            "role_id" => 2,
+            "status" => true
+        ]);
         
-        User::factory(5)->create(['role_id' => 2, 'status' => true]);
+        User::factory(5)->create(['position' => 'Employee', 'role_id' => 2, 'status' => true]);
         // $users = [
         //     [
                 // "email" => 'markgaje@gmail.com',
