@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PayRoll;
+use App\Models\Salary;
 
 class PayrollController extends Controller
 {
@@ -32,6 +33,7 @@ class PayrollController extends Controller
             'rate' => 'required|numeric',
             'month' => 'required|string',
             'working_days' => 'required|integer',
+            'total_hours_overtime' => 'required|integer',
             'user_id' => 'required'
         ]);
 
@@ -40,22 +42,38 @@ class PayrollController extends Controller
             return response()->json($responseData, 400);
         }
 
-        $request['salary'] = $request['rate'] * $request['working_days'];
+        $overtime_salary = ($request['rate'] * 1.25) * $request['total_hours_overtime'];
 
-        // var_dump($request);
+        $gross_salary = ($request['rate'] * $request['working_days']) + $overtime_salary;
+        $deduction = $gross_salary * 0.01;
+        $net_salary = $gross_salary - $deduction;
 
         $payroll = PayRoll::createPayRoll($request);
 
-        if($payroll) {
-            $responseData = [
-                'status' => 'success',
-                'message' => 'PayRoll Created Successfully!',
-                'data' => $payroll
-            ];
-
-            return response()->json($responseData, 201);
+        if(!$payroll) {
+            return response()->json($responseData, 400);
         }
-        return response()->json($responseData, 400);
+
+        $salary = [
+            'payroll_id' => $payroll->id,
+            'user_id' => $payroll->user_id,
+            'gross_salary' => $gross_salary,
+            'deduction' => $deduction,
+            'net_salary' => $net_salary
+        ];
+
+        var_dump($salary);
+
+        $salary = Salary::createSalary($salary);
+
+        $responseData = [
+            'status' => 'success',
+            'message' => 'PayRoll Created Successfully!',
+            'data' => [$payroll, $salary]
+        ];
+
+        return response()->json($responseData, 201);
+       
     }
 
     /**
