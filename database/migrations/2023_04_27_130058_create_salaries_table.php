@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('payroll_id')->constrained('pay_rolls')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->double('gross_salary', 8, 2);
-            $table->double('deduction', 5, 2);
+            $table->double('deduction', 8, 2);
             $table->double('net_salary', 8, 2);
             $table->timestamps();
         });
