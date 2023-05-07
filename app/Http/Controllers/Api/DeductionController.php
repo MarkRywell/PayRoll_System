@@ -19,9 +19,56 @@ class DeductionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
+    public static function calculateDeductions($gross_salary)
+    {     
+        $tax = 0;
+
+        $sss = $gross_salary * 0.045;
+
+        if($gross_salary >= 5000) {
+            $pagibig = $gross_salary * 0.03;
+        }
+        else {
+            $pagibig = $gross_salary * 0.02;
+        }
+        
+        $philhealth = $gross_salary * 0.045;
+
+        $benefits = $sss + $pagibig + $philhealth;
+
+        $taxable_income = $gross_salary - $benefits;
+        
+        if($taxable_income < 20833) {
+            $tax = 0;
+        }
+        elseif($taxable_income >= 20833 && $taxable_income <= 33332) {
+            $tax = ($taxable_income - 20833.33) * 0.2;
+        }
+        elseif ($taxable_income >= 33333 && $taxable_income <= 66666) {
+            $tax = ($taxable_income - 33333) * 0.2;
+        }
+        elseif ($taxable_income >= 66667 && $taxable_income <= 166666) {
+            $tax = ($taxable_income - 66667) * 0.2;
+        }
+        elseif ($taxable_income >= 166667 && $taxable_income <= 666666) {
+            $tax = ($taxable_income - 166667) * 0.2;
+        }
+        else {
+            $tax = ($taxable_income - 666667) * 0.2;
+        }
+
+
+        $total_deduction = $benefits + $tax;
+        
+        $deductions = [
+           'total_deduction' => round($total_deduction, 2), 
+           'sss' => round($sss, 2), 
+           'pagibig' => round($pagibig, 2), 
+           'philhealth' => round($philhealth, 2), 
+           'tax' => round($tax, 2)
+        ];
+
+        return $deductions;
     }
 
     /**
