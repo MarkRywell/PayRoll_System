@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\PayRoll;
 use App\Models\Salary;
+use App\Http\Controllers\Api\DeductionController;
+use App\Models\Deduction;
 
 class PayrollController extends Controller
 {
@@ -45,26 +47,30 @@ class PayrollController extends Controller
         $overtime_salary = ($request['rate'] * 1.25) * $request['total_hours_overtime'];
 
         $gross_salary = ($request['rate'] * $request['working_days']) + $overtime_salary;
-        $deduction = $gross_salary * 0.01;
-        $net_salary = $gross_salary - $deduction;
-
+        
         $payroll = PayRoll::createPayRoll($request);
 
         if(!$payroll) {
             return response()->json($responseData, 400);
         }
 
+        $deduction = DeductionController::calculateDeductions($gross_salary);
+
+        $net_salary = $gross_salary - $deduction['total_deduction'];
+
         $salary = [
             'payroll_id' => $payroll->id,
             'user_id' => $payroll->user_id,
             'gross_salary' => $gross_salary,
-            'deduction' => $deduction,
+            'deduction' => $deduction['total_deduction'],
             'net_salary' => $net_salary
         ];
 
-        var_dump($salary);
-
         $salary = Salary::createSalary($salary);
+
+        $deduction['salary_id'] = $salary->id;
+
+        $deduction = Deduction::createDeduction($deduction);
 
         $responseData = [
             'status' => 'success',
