@@ -15,6 +15,10 @@ class Salary extends Model
         return $this->belongsTo(PayRoll::class);
     }
 
+    public function deduction() {
+        return $this->hasOne(Deduction::class);
+    }
+
     public function user() {
         return $this->belongsTo(User::class);
     }
