@@ -39,7 +39,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
         Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
         Route::get('/users/archives', [UserController::class, 'archives']);
-        Route::patch('/update/{id}', [UserController::class, 'update']);
+        Route::put('/update/{id}', [UserController::class, 'update']);
 
         Route::post('/payroll/', [PayrollController::class, 'store']);
     });
@@ -47,6 +47,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::get('/payroll/{id}', [PayrollController::class, 'show']);
     Route::get('/getUser', [UserController::class, 'getUser']);
+    
 
 });
 

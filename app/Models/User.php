@@ -42,6 +42,11 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public static function getUserbyEmail($email)
+    {
+        return User::get()->where('email', $email);
+    }
+
     /**
      * The attributes that should be cast.
      *
