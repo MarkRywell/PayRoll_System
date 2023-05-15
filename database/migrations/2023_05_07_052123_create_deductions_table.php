@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('salary_id')->constrained('salaries')->onDelete('cascade')->onUpdate('cascade');
-            $table->double('sss', 5, 2);
-            $table->double('pagibig', 5, 2);
-            $table->double('philhealth', 5, 2);
-            $table->double('tax', 5, 2);
+            $table->double('sss', 8, 2);
+            $table->double('pagibig', 8, 2);
+            $table->double('philhealth', 8, 2);
+            $table->double('tax', 8, 2);
             $table->double('total_deduction', 8, 2);
             $table->timestamps();
         });
