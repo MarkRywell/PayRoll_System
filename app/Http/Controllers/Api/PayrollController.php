@@ -17,7 +17,7 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        return PayRoll::get();
+        return Payroll::with('user')->get();
     }
 
     /**
