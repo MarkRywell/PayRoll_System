@@ -44,7 +44,7 @@ class User extends Authenticatable
 
     public static function getUserbyEmail($email)
     {
-        return User::get()->where('email', $email);
+        return User::where('email', $email)->first();
     }
 
     /**
