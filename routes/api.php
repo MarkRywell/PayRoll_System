@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::put('/update/{id}', [UserController::class, 'update']);
 
         Route::post('/payroll/', [PayrollController::class, 'store']);
+        Route::get('/payroll/', [PayrollController::class, 'index']);
     });
 
 
