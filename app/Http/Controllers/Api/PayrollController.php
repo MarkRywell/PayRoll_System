@@ -9,6 +9,7 @@ use App\Models\PayRoll;
 use App\Models\Salary;
 use App\Http\Controllers\Api\DeductionController;
 use App\Models\Deduction;
+use App\Models\User;
 
 class PayrollController extends Controller
 {
@@ -17,7 +18,25 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        return Payroll::with('user')->get();
+        // return Payroll::with('user')->get();
+
+        $payrolls = Payroll::get();
+        $users = User::withTrashed()->get();
+
+        $payroll_list = [];
+
+        foreach($users as $user) {
+            foreach($payrolls as $payroll) {
+                if($payroll->user_id == $user->id) {
+                    $payroll_list[] = [
+                        'payroll' => $payroll,
+                        'user' => $user->name
+                    ];
+                }
+            }
+        }
+
+        return $payroll_list;
     }
 
     /**
