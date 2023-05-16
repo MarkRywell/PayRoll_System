@@ -113,7 +113,6 @@ class AuthController extends Controller
 
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required|string'
         ]);
 
         
@@ -124,22 +123,20 @@ class AuthController extends Controller
 
         $credentials = request(['email', 'password']);
 
-        if (Auth::attempt($credentials)) {
+        $user = User::getUserbyEmail($credentials);
 
-            $user = $request->user();
+        if(!$user) return response()->json($responseData, 400);
 
-            $user->tokens()->delete();
-            
-            $responseData = [
-                'status' => 'success',
-                'message' => 'Successful Logout',
-                'data' => null
-            ];
+        $user->tokens()->delete();
 
-            return response($responseData, 200);
-        }
-        
-        return response()->json($responseData, 400);
+        $responseData = [
+                    'status' => 'success',
+                    'message' => 'Successful Logout',
+                    'data' => null
+                ];
+
+        return response($responseData, 200);
+
     }
 
 
