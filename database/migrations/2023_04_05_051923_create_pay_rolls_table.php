@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('pay_rolls', function (Blueprint $table) {
             $table->id();
-            $table->double('rate', 6, 2);
             $table->string("month");
             $table->integer('working_days');
             $table->integer('total_hours_overtime');
