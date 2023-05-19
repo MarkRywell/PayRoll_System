@@ -17,10 +17,11 @@ class AddressSeeder extends Seeder
         $address = [
             'street' => 'Corrales Extension',
             'city' => 'Cagayan de Oro',
-            'zip_code' => 9000
+            'zip_code' => '9000',
+            'country' => 'Philippines'
         ];
 
         Address::create($address);
-        Address::factory(5);
+        Address::factory(5)->create();
     }
 }
