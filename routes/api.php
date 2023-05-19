@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PayrollController;
 use App\Http\Controllers\Api\UserController;
@@ -49,6 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/payroll/{id}', [PayrollController::class, 'show']);
     Route::get('/getUser', [UserController::class, 'getUser']);
     
+    Route::post('/address', [AddressController::class, 'store']);
 
 });
 
