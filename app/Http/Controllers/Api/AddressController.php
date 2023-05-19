@@ -26,7 +26,8 @@ class AddressController extends Controller
             'street' => 'required|string',
             'city' => 'required|string',
             'state' => 'string',
-            'zip_code' => 'required|integer'
+            'zip_code' => 'required|integer',
+            'country' => 'required|string'
         ]);
 
         if($validator->fails()) {
