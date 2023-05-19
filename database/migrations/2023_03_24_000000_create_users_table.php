@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('contact_number');
             $table->string('position');
-            $table->double('rate', 6, 2);
+            $table->double('rate', 6, 2)->nullable();
             $table->boolean('status');
             $table->string('photo')->nullable();
             $table->timestamp('email_verified_at')->nullable();
