@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('street');
             $table->string('city');
-            $table->integer('zip_code');
+            $table->string('zip_code');
             $table->string('state')->nullable();
+            $table->string('country');
             $table->timestamps();
         });
     }
