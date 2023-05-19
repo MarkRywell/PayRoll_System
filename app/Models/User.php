@@ -54,6 +54,11 @@ class User extends Authenticatable
         return User::where('email', $email)->first();
     }
 
+    public static function getRate($id)
+    {
+        return User::where('id', $id)->get('rate');
+    }
+
     /**
      * The attributes that should be cast.
      *
