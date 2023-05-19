@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             "position" => 'Frontend Developer',
             "address_id" => 1,
             "contact_number" => "09177035723",
-            "rate" => 2400,
+            "rate" => 250,
             "role_id" => 2,
             "status" => true
         ]);
