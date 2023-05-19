@@ -20,8 +20,8 @@ class PayRoll extends Model
     }
 
     protected $fillable = [
-        'rate',
         'month',
+        'year',
         'working_days',
         'total_hours_overtime',
         'user_id'
@@ -30,8 +30,8 @@ class PayRoll extends Model
     public static function createPayRoll($request)
     {   
         $payroll = PayRoll::create([
-            'rate' => $request['rate'],
             'month' => $request['month'],
+            'year' => $request['year'],
             'working_days' => $request['working_days'],
             'total_hours_overtime' => $request['total_hours_overtime'],
             'user_id' => $request['user_id']
