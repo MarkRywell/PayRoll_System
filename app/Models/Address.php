@@ -15,11 +15,11 @@ class Address extends Model
     }
 
     protected $fillable = [
-        'id',
         'city',
         'zip_code',
         'state',
-        'street'
+        'street',
+        'country'
     ];
 
     public static function createAddress($request) {
@@ -27,7 +27,8 @@ class Address extends Model
             'street' => $request['street'],
             'city' => $request['city'],
             'state' => $request['state'],
-            'zip_code' => $request['zip_code']
+            'zip_code' => $request['zip_code'],
+            'country' => $request['country']
         ]);
     }
 }
