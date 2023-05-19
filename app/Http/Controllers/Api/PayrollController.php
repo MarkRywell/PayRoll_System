@@ -51,8 +51,8 @@ class PayrollController extends Controller
         ];
 
         $validator = Validator::make($request->all(), [
-            'rate' => 'required|numeric',
             'month' => 'required|string',
+            'year' => 'required|string',
             'working_days' => 'required|integer',
             'total_hours_overtime' => 'required|integer',
             'user_id' => 'required'
@@ -63,9 +63,15 @@ class PayrollController extends Controller
             return response()->json($responseData, 400);
         }
 
+        $rate = 0;
+
+        if(!$request['rate']) {
+            $request['rate'] = User::getRate($request['user_id'])[0]['rate'];
+        }
+
         $overtime_salary = ($request['rate'] * 1.25) * $request['total_hours_overtime'];
 
-        $gross_salary = ($request['rate'] * $request['working_days']) + $overtime_salary;
+        $gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary;
         
         $payroll = PayRoll::createPayRoll($request);
 
@@ -94,7 +100,7 @@ class PayrollController extends Controller
         $responseData = [
             'status' => 'success',
             'message' => 'PayRoll Created Successfully!',
-            'data' => [$payroll, $salary]
+            'data' => [$payroll, $salary, $deduction]
         ];
 
         return response()->json($responseData, 201);
