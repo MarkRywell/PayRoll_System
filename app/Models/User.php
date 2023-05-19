@@ -17,17 +17,24 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
+    public function address() {
+        return $this->belongsTo(Address::class);
+    }
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
+        'role_id',
+        'address_id',
         'name',
         'email',
         'password',
+        'contact_number',
         'position',
-        'role_id',
+        'rate',
         'status',
         'photo'
     ];
