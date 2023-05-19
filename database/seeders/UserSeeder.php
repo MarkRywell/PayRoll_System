@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             "password" => Hash::make('mark123'),
             "name" => 'Mark Gaje',
             "position" => 'CEO',
+            "address_id" => 1,
             "role_id" => 1,
             "status" => true
         ]);
@@ -29,6 +30,8 @@ class UserSeeder extends Seeder
             "password" => Hash::make('janri123'),
             "name" => 'John Ray Canete',
             "position" => 'Frontend Developer',
+            "address_id" => 1,
+            "rate" => 2400,
             "role_id" => 2,
             "status" => true
         ]);
