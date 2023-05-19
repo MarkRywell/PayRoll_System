@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Address;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,7 @@ class UserSeeder extends Seeder
             "name" => 'Mark Gaje',
             "position" => 'CEO',
             "address_id" => 1,
+            "contact_number" => "09265567313",
             "role_id" => 1,
             "status" => true
         ]);
@@ -31,33 +33,17 @@ class UserSeeder extends Seeder
             "name" => 'John Ray Canete',
             "position" => 'Frontend Developer',
             "address_id" => 1,
+            "contact_number" => "09177035723",
             "rate" => 2400,
             "role_id" => 2,
             "status" => true
         ]);
+
+        $address_id = Address::inRandomOrder()->value('id');
+        
+        echo $address_id;
         
         User::factory(5)->create(['position' => 'Employee', 'role_id' => 2, 'status' => true]);
-        // $users = [
-        //     [
-                // "email" => 'markgaje@gmail.com',
-                // "password" => Hash::make('mark123'),
-                // "name" => 'Mark Gaje',
-                // "role_id" => 1,
-                // "status" => true
-        //     ],
-        //     [
-        //         "email" => 'janri@gmail.com',
-        //         "password" => Hash::make('janri123'),
-        //         "name" => 'John Ray Canete',
-        //         "role_id" => 2,
-        //         "status" => true
-        //     ]
-        //     ];
-
-        //     User::create($users);
-
-            // DB::table('users')->insert($users);
-
-        // User::factory(1)->create(["email" => 'markgaje@gmail.com', "password" => Hash::make('mark123'), "name" => 'Mark Gaje', 'role_id' => 1, "status" => true]);
+       
     }
 }
