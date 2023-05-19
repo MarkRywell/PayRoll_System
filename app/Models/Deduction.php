@@ -25,7 +25,7 @@ class Deduction extends Model
 
     public static function createDeduction($request)
     {
-        $deduction = Deduction::create([
+        return Deduction::create([
             'salary_id' => $request['salary_id'],
             'sss' => $request['sss'],
             'pagibig' => $request['pagibig'],
