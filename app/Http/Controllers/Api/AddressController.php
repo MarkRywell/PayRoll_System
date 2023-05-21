@@ -20,9 +20,13 @@ class AddressController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
+    public static function store($addressData, Request $request = null)
+    {   
+        if(!filled($request)) {
+            $request = $addressData;
+        }
+
+        $validator = Validator::make($request, [
             'street' => 'required|string',
             'city' => 'required|string',
             'state' => 'string',
@@ -35,7 +39,7 @@ class AddressController extends Controller
             return response()->json($response, 400);
         }
 
-        $data = $request->all();
+        $data = $request;
 
         $address = Address::createAddress($data);
 
@@ -43,7 +47,7 @@ class AddressController extends Controller
             return response()->json("Address Creation Unsuccessful", 500);
         }
 
-        return response()->json(['message' => "Success", 'address' => $address], 201);
+        return $address;
     } 
 
     /**
