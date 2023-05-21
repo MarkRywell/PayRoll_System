@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('pay_rolls', function (Blueprint $table) {
             $table->id();
             $table->string("month");
-            $table->string("year");
             $table->integer('working_days');
             $table->integer('total_hours_overtime');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');

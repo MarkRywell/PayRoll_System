@@ -21,7 +21,6 @@ class PayRoll extends Model
 
     protected $fillable = [
         'month',
-        'year',
         'working_days',
         'total_hours_overtime',
         'user_id'
@@ -31,7 +30,6 @@ class PayRoll extends Model
     {   
         $payroll = PayRoll::create([
             'month' => $request['month'],
-            'year' => $request['year'],
             'working_days' => $request['working_days'],
             'total_hours_overtime' => $request['total_hours_overtime'],
             'user_id' => $request['user_id']

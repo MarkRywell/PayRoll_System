@@ -52,7 +52,6 @@ class PayrollController extends Controller
 
         $validator = Validator::make($request->all(), [
             'month' => 'required|string',
-            'year' => 'required|string',
             'working_days' => 'required|integer',
             'total_hours_overtime' => 'required|integer',
             'user_id' => 'required'
