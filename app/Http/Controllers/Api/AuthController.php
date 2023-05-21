@@ -21,13 +21,14 @@ class AuthController extends Controller
             'message' => '',
             'data' => null
         ];
-      
+
         
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required|string', 
             'email' => 'required|string|unique:users',
             'password' => 'required|string|min:6',
-            'position' => 'required|string'
+            'position' => 'required|string',
+            'contact_number' => 'required|string',
         ]);
         
         if ($validator->fails()) {
@@ -36,13 +37,24 @@ class AuthController extends Controller
             return response()->json($responseData, 400);
         }
 
-        
+        $addressData = [
+            'street' => $request['street'],
+            'city' => $request['city'],
+            'state' => $request['state'],
+            'zip_code' => $request['zip_code'],
+            'country' => $request['country'],
+        ];
+
+        $address = AddressController::store($addressData);
+
 
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
             'position' => $request['position'],
+            'address_id' => $address['id'],
+            'contact_number' => $request['contact_number'],
             'role_id' => 2,
             'status' => true
         ]);
