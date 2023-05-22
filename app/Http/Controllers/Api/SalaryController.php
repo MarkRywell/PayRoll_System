@@ -27,9 +27,9 @@ class SalaryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Salary $salary)
+    public function show($user_id)
     {
-        //
+        
     }
 
     /**
