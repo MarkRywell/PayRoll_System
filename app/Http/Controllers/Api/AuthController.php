@@ -55,6 +55,7 @@ class AuthController extends Controller
             'position' => $request['position'],
             'address_id' => $address['id'],
             'contact_number' => $request['contact_number'],
+            'rate' => $request['rate'],
             'role_id' => 2,
             'status' => true
         ]);
