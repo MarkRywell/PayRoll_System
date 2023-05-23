@@ -110,6 +110,26 @@ class UserController extends Controller
         return response($responseData);
     }
 
+    public function updateRate(Request $request, int $id)
+    {   
+
+        $validator = Validator::make($request->all(), [
+            'rate' => 'required|numeric'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors()->first()], 400);
+        }
+
+        $response = User::updateRate($request->all(), $id);
+
+        if(!$response) {
+            return response()->json(['message' => "Rate Update Fail"], 500);
+        }
+
+        return response()->json(['message' => "Rate Updated"], 200);
+    }
+
     public function update(Request $request, int $id)
     {
         $responseData = [
