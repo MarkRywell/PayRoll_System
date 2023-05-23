@@ -35,5 +35,11 @@ class Deduction extends Model
         ]);
     }
 
+    public static function getDeductionBySalaryId($salary_id)
+    {
+        return Deduction::where('salary_id', $salary_id)->get();
+    }
+    
+
 
 }
