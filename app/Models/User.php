@@ -59,6 +59,11 @@ class User extends Authenticatable
         return User::where('id', $id)->get('rate');
     }
 
+    public static function updateRate($rate, $id)
+    {
+        return User::where('id', $id)->update($rate);
+    }
+
     /**
      * The attributes that should be cast.
      *
