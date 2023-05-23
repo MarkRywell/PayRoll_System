@@ -18,7 +18,6 @@ class PayrollController extends Controller
      */
     public function index()
     {
-        // return Payroll::with('user')->get();
 
         $payrolls = Payroll::get();
         $users = User::withTrashed()->get();
@@ -61,8 +60,6 @@ class PayrollController extends Controller
             $responseData['message'] = $validator->errors()->first();
             return response()->json($responseData, 400);
         }
-
-        $rate = 0;
 
         if(!$request['rate']) {
             $request['rate'] = User::getRate($request['user_id'])[0]['rate'];
