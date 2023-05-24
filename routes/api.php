@@ -37,12 +37,14 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['middleware' => ['permission']], function () {
         Route::post('/register', [AuthController::class, 'register']);
-        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
-        Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
-        Route::get('/users/archives', [UserController::class, 'archives']);
-        Route::put('/update/{id}', [UserController::class, 'update']);
-
-        Route::put('/users/rate/{id}', [UserController::class, 'updateRate']);
+        
+        Route::prefix('users')->group(function () {
+            Route::put('/rate/{id}', [UserController::class, 'updateRate']);
+            Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
+            Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
+            Route::get('/archives', [UserController::class, 'archives']);
+            Route::put('/update/{id}', [UserController::class, 'update']);
+        });
 
         Route::prefix('payroll')->group(function () {
             Route::post('/', [PayrollController::class, 'store']);
@@ -68,4 +70,5 @@ Route::get('/unauthorized', function () {
 Route::get('/', [UserController::class, 'index']);
 
 Route::post('/login', [AuthController::class, 'login']);
+
 Route::post('/logout', [AuthController::class, 'logout']);
