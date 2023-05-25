@@ -40,10 +40,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         
         Route::prefix('users')->group(function () {
             Route::put('/rate/{id}', [UserController::class, 'updateRate']);
-            Route::delete('/delete/{id}', [UserController::class, 'destroy'])->withTrashed();
+            Route::delete('/{id}', [UserController::class, 'destroy'])->withTrashed();
             Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
             Route::get('/archives', [UserController::class, 'archives']);
-            Route::put('/update/{id}', [UserController::class, 'update']);
+            Route::put('/{id}', [UserController::class, 'update']);
         });
 
         Route::prefix('payroll')->group(function () {
