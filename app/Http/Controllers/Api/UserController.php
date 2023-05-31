@@ -110,6 +110,13 @@ class UserController extends Controller
         return response($responseData);
     }
 
+    public function getRate(int $id)
+    {
+        $rate = User::getRate($id);
+
+        return $rate;
+    }
+
     public function updateRate(Request $request, int $id)
     {   
 
