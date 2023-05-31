@@ -43,7 +43,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::delete('/{id}', [UserController::class, 'destroy'])->withTrashed();
             Route::post('/restore/{id}', [UserController::class, 'restore'])->withTrashed();
             Route::get('/archives', [UserController::class, 'archives']);
-            Route::put('/{id}', [UserController::class, 'update']);
+            Route::put('/{id}', [UserController::class, 'updateUser']);
         });
 
         Route::prefix('payroll')->group(function () {
