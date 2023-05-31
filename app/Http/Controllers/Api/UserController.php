@@ -130,6 +130,44 @@ class UserController extends Controller
         return response()->json(['message' => "Rate Updated"], 200);
     }
 
+    public function updateUser(Request $request, int $id)
+    {
+        $responseData = [
+            'status' => 'fail',
+            'message' => '',
+            'data' => null
+        ];
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'string',
+            'password' => 'string',
+            'contact_number' => 'string',
+            'position' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            $responseData['message'] = $validator->errors()->first();
+            
+            return response()->json($responseData, 400);
+        }
+
+        $request['password'] = Hash::make($request['password']);
+
+        $data = array_filter($request->all());
+
+        $response = User::where('id', $id)->update($data);
+
+        if($response != null)
+        {
+            $responseData['status'] = 'success';
+            $responseData['message'] = 'Update Successful';
+            return response()->json($responseData, 200);
+        }
+        
+        $responseData['message'] = 'Update Unsuccessful';
+        return response($responseData);
+    }
+
     public function update(Request $request, int $id)
     {
         $responseData = [
