@@ -29,7 +29,8 @@ class PayrollController extends Controller
                 if($payroll->user_id == $user->id) {
                     $payroll_list[] = [
                         'payroll' => $payroll,
-                        'user' => $user->name
+                        'user' => $user->name,
+                        'rate' => $user->rate
                     ];
                 }
             }
