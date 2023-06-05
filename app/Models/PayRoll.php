@@ -40,8 +40,6 @@ class PayRoll extends Model
 
     public static function getPayRoll($user_id)
     {
-        $payroll = PayRoll::where('user_id', $user_id)->get();
-
-        return $payroll;
+        return PayRoll::where('user_id', $user_id)->get();
     }
 }
