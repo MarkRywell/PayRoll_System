@@ -57,10 +57,10 @@ class UserController extends Controller
         $user = $request->user();
         
         if($user->role_id == 1) {
-            $user = User::get(['id', 'name', 'email', 'position', 'role_id', 'photo']);
+            $user = User::get(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
         }
         else {
-            $user = $user->only(['id', 'name', 'email', 'position', 'role_id', 'photo']);
+            $user = $user->only(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
         }
         
         if($user)
