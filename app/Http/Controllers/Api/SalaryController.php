@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Deduction;
 use App\Models\Salary;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,10 @@ class SalaryController extends Controller
      */
     public function index()
     {
-        //
+        // $salary = Salary::getSalaryByUserId($id);
+        // $salary = $salary[0];
+        // $deduction = Deduction::getDeductionBySalaryId($salary['id']);
+        // $deduction = $deduction[0];
     }
 
     /**
@@ -27,9 +31,14 @@ class SalaryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($user_id)
+    public function show($id)
     {
-        
+        $salary = Salary::getSalaryByUserId($id);
+        $salary = $salary[0];
+        $deduction = Deduction::getDeductionBySalaryId($salary['id']);
+        $deduction = $deduction[0];
+
+        return response()->json(['salary' => $salary, 'deductions' => $deduction]);
     }
 
     /**
