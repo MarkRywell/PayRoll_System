@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PayrollController;
+use App\Http\Controllers\Api\SalaryController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Utils\Helper;
 use Illuminate\Http\Request;
@@ -51,6 +52,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
             Route::post('/', [PayrollController::class, 'store']);
             Route::get('/', [PayrollController::class, 'index']);
         });
+    });
+
+    Route::prefix('salary')->group(function () {
+        Route::get('/{id}', [SalaryController::class, 'show']);
     });
 
 
