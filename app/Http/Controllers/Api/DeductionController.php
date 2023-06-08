@@ -23,7 +23,44 @@ class DeductionController extends Controller
     {     
         $tax = 0;
 
-        $sss = $gross_salary * 0.045;
+        $sss = 0;
+
+        if($gross_salary < 4250) {
+            $sss = 180;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
 
         if($gross_salary >= 5000) {
             $pagibig = $gross_salary * 0.03;
