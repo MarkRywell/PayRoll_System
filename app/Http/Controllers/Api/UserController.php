@@ -76,6 +76,12 @@ class UserController extends Controller
         return response($responseData, 404);
     }
 
+    public function profile($id)
+    {
+        $user = User::getUserbyId($id);
+        return response($user[0]);
+    }
+
     /**
      * Update the specified resource in storage.
      */
@@ -116,6 +122,7 @@ class UserController extends Controller
 
         return $rate;
     }
+    
 
     public function updateRate(Request $request, int $id)
     {   
