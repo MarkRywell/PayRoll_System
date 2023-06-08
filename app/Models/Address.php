@@ -31,4 +31,8 @@ class Address extends Model
             'country' => $request['country']
         ]);
     }
+
+    public static function getAddress($id) {
+        return Address::where('id', $id);
+    }
 }
