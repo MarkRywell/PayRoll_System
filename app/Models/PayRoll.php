@@ -42,4 +42,9 @@ class PayRoll extends Model
     {
         return PayRoll::where('user_id', $user_id)->get();
     }
+
+    public static function getPayRollByMonth($month)
+    {
+        return PayRoll::where('month', $month)->get();
+    }
 }
