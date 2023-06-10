@@ -36,7 +36,7 @@ class AddressController extends Controller
 
         if($validator->fails()) {
             $response = $validator->errors()->first();
-            return response()->json($response, 400);
+            return $response;
         }
 
         $data = $request;

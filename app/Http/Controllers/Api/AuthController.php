@@ -48,6 +48,7 @@ class AuthController extends Controller
 
         $address = AddressController::store($addressData);
 
+        if(gettype($address) === 'string') return response()->json(['message' => $address], 400);
 
         $user = User::create([
             'name' => $request['name'],
