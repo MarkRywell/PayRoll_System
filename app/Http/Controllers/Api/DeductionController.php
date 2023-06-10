@@ -31,34 +31,34 @@ class DeductionController extends Controller
         elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 4750 && $gross_salary <= 5249.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 5250 && $gross_salary <= 5749.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 6250 && $gross_salary <= 6249.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 6750 && $gross_salary <= 6749.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 7250 && $gross_salary <= 7249.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 7750 && $gross_salary <= 7749.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 8250 && $gross_salary <= 8249.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 8750 && $gross_salary <= 8749.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 9250 && $gross_salary <= 9249.99) {
             $sss = 202.5;
         }
-        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+        elseif($gross_salary >= 9750 && $gross_salary <= 9749.99) {
             $sss = 202.5;
         }
 
