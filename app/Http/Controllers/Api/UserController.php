@@ -113,13 +113,16 @@ class UserController extends Controller
     public function getRate(int $id)
     {
         $rate = User::getRate($id);
-
         return $rate;
+    }
+
+    public function getPhoto($photo)
+    {
+        return response()->file(storage_path("app/public/uploads/$photo"));
     }
 
     public function updateRate(Request $request, int $id)
     {   
-
         $validator = Validator::make($request->all(), [
             'rate' => 'required|numeric'
         ]);
