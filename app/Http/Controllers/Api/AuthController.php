@@ -50,6 +50,10 @@ class AuthController extends Controller
 
         if(gettype($address) === 'string') return response()->json(['message' => $address], 400);
 
+        $file_path = $request['photo']->store('public/uploads');
+
+        $file_name = str_replace("public/uploads/", "", $file_path);
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -59,7 +63,8 @@ class AuthController extends Controller
             'contact_number' => $request['contact_number'],
             'rate' => $request['rate'],
             'role_id' => 2,
-            'status' => true
+            'status' => true,
+            'photo' => $file_name
         ]);
 
         if ($user == null)
