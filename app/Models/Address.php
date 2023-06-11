@@ -23,7 +23,7 @@ class Address extends Model
     ];
 
     public static function createAddress($request) {
-        return Address::create([
+        return Address::firstOrCreate([
             'street' => $request['street'],
             'city' => $request['city'],
             'state' => $request['state'],

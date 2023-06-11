@@ -68,7 +68,15 @@ class PayrollController extends Controller
 
         $overtime_salary = ($request['rate'] * 1.25) * $request['total_hours_overtime'];
 
+        $cash_advance = $request['cash_advance'] ? $request['cash_advance'] : 0;
+
+        // if(is_null($request['cash_advance'])) {
+        //     $cash_advance = $request['cash_advance'];
+        // }
+
         $gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary;
+
+        $deducted_gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary - $cash_advance;
         
         $payroll = PayRoll::createPayRoll($request);
 
@@ -76,9 +84,11 @@ class PayrollController extends Controller
             return response()->json($responseData, 400);
         }
 
-        $deduction = DeductionController::calculateDeductions($gross_salary);
+        $deduction = DeductionController::calculateDeductions($deducted_gross_salary);
+        
 
-        $net_salary = $gross_salary - $deduction['total_deduction'];
+        $net_salary = $deducted_gross_salary - $deduction['total_deduction'];
+        $deduction['total_deduction'] = $deduction['total_deduction'] + $cash_advance;
 
         $salary = [
             'payroll_id' => $payroll->id,
@@ -91,6 +101,7 @@ class PayrollController extends Controller
         $salary = Salary::createSalary($salary);
 
         $deduction['salary_id'] = $salary->id;
+        $deduction['cash_advance'] = $cash_advance;
 
         $deduction = Deduction::createDeduction($deduction);
 

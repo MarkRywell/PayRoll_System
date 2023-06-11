@@ -16,17 +16,19 @@ class Deduction extends Model
 
     protected $fillable = [
         'salary_id',
+        'cash_advance',
         'sss',
         'pagibig',
         'philhealth',
         'tax',
-        'total_deduction'
+        'total_deduction',
     ];
 
     public static function createDeduction($request)
     {
         return Deduction::create([
             'salary_id' => $request['salary_id'],
+            'cash_advance' => $request['cash_advance'],
             'sss' => $request['sss'],
             'pagibig' => $request['pagibig'],
             'philhealth' => $request['philhealth'],

@@ -61,6 +61,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/profile/{id}', [UserController::class, 'profile']);
     Route::get('/payroll/{id}', [PayrollController::class, 'show']);
     Route::get('/getUser', [UserController::class, 'getUser']);
+    Route::get('/getPhoto/{photo}', [UserController::class, 'getPhoto']);
     
     Route::post('/address', [AddressController::class, 'store']);
 

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Nette\Utils\Json;
+use Illuminate\Support\Facades\RateLimiter;
 
 class AuthController extends Controller
 {
@@ -47,6 +48,11 @@ class AuthController extends Controller
 
         $address = AddressController::store($addressData);
 
+        if(gettype($address) === 'string') return response()->json(['message' => $address], 400);
+
+        $file_path = $request['photo']->store('public/uploads');
+
+        $file_name = str_replace("public/uploads/", "", $file_path);
 
         $user = User::create([
             'name' => $request['name'],
@@ -57,7 +63,8 @@ class AuthController extends Controller
             'contact_number' => $request['contact_number'],
             'rate' => $request['rate'],
             'role_id' => 2,
-            'status' => true
+            'status' => true,
+            'photo' => $file_name
         ]);
 
         if ($user == null)
@@ -94,27 +101,38 @@ class AuthController extends Controller
     
         $credentials = request(['email', 'password']);
 
-        if (Auth::attempt($credentials)) {
+        try {
 
-            $user = $request->user();
+            if (RateLimiter::tooManyAttempts(request()->ip(), 3)) {
+                return response()->json(
+                    [ 'message' => 'Too Many Failed Login Attempt. Restricted for 30 Seconds'], 
+                );
+            }
 
-            $user->tokens()->delete();
-            
-            $responseData = [
-                'status' => 'success',
-                'message' => 'Successful Login',
-                'data' => [
-                    'token' => $user->createToken(Auth::user())->plainTextToken,
-                    'user' => $user
-                ]
-            ];
+            if (Auth::attempt($credentials)) {
 
-            // print_r (Json::decode($user->tokens[0]->name)->role_id);
+                $user = $request->user();
+    
+                $user->tokens()->delete();
+                
+                $responseData = [
+                    'status' => 'success',
+                    'message' => 'Successful Login',
+                    'data' => [
+                        'token' => $user->createToken(Auth::user())->plainTextToken,
+                        'user' => $user
+                    ]
+                ];
+                RateLimiter::clear(request()->ip());
+                return response($responseData, 200);
+            }
 
-            return response($responseData, 200);
+            RateLimiter::hit(request()->ip(), 30);
+            return response($responseData, 400);
         }
-
-        return response($responseData, 400);
+        catch(\Throwable $th) {
+            throw $th;
+        }
     }
 
     public function logout(Request $request)
