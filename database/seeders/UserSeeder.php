@@ -32,10 +32,22 @@ class UserSeeder extends Seeder
             "password" => Hash::make('janri123'),
             "name" => 'John Ray Canete',
             "position" => 'Frontend Developer',
-            "address_id" => 1,
+            "address_id" => 2,
             "contact_number" => "09177035723",
             "rate" => 250,
             "role_id" => 2,
+            "status" => true
+        ]);
+
+        User::create([
+            "email" => 'senining@gmail.com',
+            "password" => Hash::make('senining123'),
+            "name" => 'RJ Senining',
+            "position" => 'Clerk',
+            "address_id" => 3,
+            "contact_number" => "09231231234",
+            "rate" => 250,
+            "role_id" => 3,
             "status" => true
         ]);
 

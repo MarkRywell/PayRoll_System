@@ -14,14 +14,30 @@ class AddressSeeder extends Seeder
     public function run(): void
     {   
 
-        $address = [
+        $addresses = [
+            [
             'street' => 'Corrales Extension',
             'city' => 'Cagayan de Oro',
             'zip_code' => '9000',
             'country' => 'Philippines'
-        ];
+            ],
+            [
+                'street' => 'Nazareth',
+                'city' => 'Cagayan de Oro',
+                'zip_code' => '9000',
+                'country' => 'Philippines'],
+            [
+                'street' => 'Puntod',
+                'city' => 'Cagayan de Oro',
+                'zip_code' => '9000',
+                'country' => 'Philippines'
+            ],
 
-        Address::create($address);
+        ];
+        foreach($addresses as $address) {
+            Address::create($address);
+        }
+        
         Address::factory(5)->create();
     }
 }
