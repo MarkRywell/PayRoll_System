@@ -33,6 +33,6 @@ class Address extends Model
     }
 
     public static function getAddress($id) {
-        return Address::where('id', $id);
+        return Address::find($id);
     }
 }
