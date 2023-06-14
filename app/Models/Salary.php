@@ -46,12 +46,12 @@ class Salary extends Model
 
     public static function getSalaryByUserId($user_id)
     {
-        return Salary::where('user_id', $user_id)->latest()->get();
+        return Salary::where('user_id', $user_id);
     }
 
     public static function getSalaryByPayrollId($payroll_id)
     {
-        return  Salary::where('payroll_id', $payroll_id)->get();
+        return Salary::where('payroll_id', $payroll_id)->first();
     }
 
     
