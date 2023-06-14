@@ -14,10 +14,7 @@ class SalaryController extends Controller
      */
     public function index()
     {
-        // $salary = Salary::getSalaryByUserId($id);
-        // $salary = $salary[0];
-        // $deduction = Deduction::getDeductionBySalaryId($salary['id']);
-        // $deduction = $deduction[0];
+       
     }
 
     /**

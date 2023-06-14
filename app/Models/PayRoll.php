@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Controllers\Api\PayrollController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
@@ -46,5 +47,10 @@ class PayRoll extends Model
     public static function getPayRollByMonth($month)
     {
         return PayRoll::where('month', $month)->get();
+    }
+
+    public static function getLatestPayRoll($user_id)
+    {
+        return Payroll::where('user_id', $user_id)->latest()->first();
     }
 }
