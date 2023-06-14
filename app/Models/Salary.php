@@ -51,7 +51,7 @@ class Salary extends Model
 
     public static function getSalaryByPayrollId($payroll_id)
     {
-        return Salary::where('payroll_id', $payroll_id);
+        return Salary::where('payroll_id', $payroll_id)->get();
     }
 
     

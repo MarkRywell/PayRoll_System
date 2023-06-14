@@ -30,8 +30,8 @@ class SalaryController extends Controller
      */
     public function show($id)
     {
-        // $salary = Salary::getSalaryByUserId($id);
         $salary = Salary::getSalaryByPayrollId($id);
+        $salary = $salary[0];
         $deduction = Deduction::getDeductionBySalaryId($salary['id']);
         $deduction = $deduction[0];
 
