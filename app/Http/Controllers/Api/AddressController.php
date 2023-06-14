@@ -53,9 +53,9 @@ class AddressController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Address $address)
+    public function show(int $id)
     {
-        //
+        return response()->json(['address' => Address::getAddress($id)]);
     }
 
     /**
