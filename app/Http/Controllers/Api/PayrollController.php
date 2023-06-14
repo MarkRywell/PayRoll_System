@@ -123,6 +123,31 @@ class PayrollController extends Controller
         return PayRoll::getPayRoll($user_id);
     }
 
+    public function showLatest(int $user_id)
+    {
+        $payroll =  PayRoll::getLatestPayRoll($user_id);
+
+        if(!$payroll) {
+            return response()->json();
+        }
+        
+        $salary = Salary::getSalaryByPayrollId($payroll->id);
+
+        $deduction = Deduction::getDeductionBySalaryId($salary->id);
+
+        $data = [
+            'payroll' => $payroll,
+            'salary' => $salary,
+            'deduction' => $deduction[0]
+        ];
+        return $data;
+    }
+
+    public function getOwnPayroll(int $user_id)
+    {
+        return PayRoll::getPayRoll($user_id);
+    }
+
     /**
      * Update the specified resource in storage.
      */
