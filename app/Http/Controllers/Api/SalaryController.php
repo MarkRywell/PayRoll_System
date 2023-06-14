@@ -14,7 +14,10 @@ class SalaryController extends Controller
      */
     public function index()
     {
-       
+       $salary = Salary::get();
+       $deduction = Deduction::get();
+
+       return response()->json(['salary' => $salary, 'deduction' => $deduction]);
     }
 
     /**

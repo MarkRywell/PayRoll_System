@@ -55,6 +55,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::prefix('salary')->group(function () {
         Route::get('/{id}', [SalaryController::class, 'show']);
+        Route::get('/', [SalaryController::class, 'index']);
     });
 
     Route::prefix('address')->group(function () {
