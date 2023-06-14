@@ -54,6 +54,12 @@ class AuthController extends Controller
 
         $file_name = str_replace("public/uploads/", "", $file_path);
 
+        $role = 2;
+
+        if($request['position'] == "Clerk") {
+            $role = 3;
+        }
+
         $user = User::create([
             'name' => $request['name'],
             'email' => $request['email'],
@@ -62,7 +68,7 @@ class AuthController extends Controller
             'address_id' => $address['id'],
             'contact_number' => $request['contact_number'],
             'rate' => $request['rate'],
-            'role_id' => 2,
+            'role_id' => $role,
             'status' => true,
             'photo' => $file_name
         ]);
