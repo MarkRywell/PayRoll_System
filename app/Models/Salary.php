@@ -54,5 +54,10 @@ class Salary extends Model
         return Salary::where('payroll_id', $payroll_id)->get();
     }
 
+    public static function getSalaryLatest($payroll_id)
+    {
+        return Salary::where('payroll_id', $payroll_id)->first();
+    }
+
     
 }
