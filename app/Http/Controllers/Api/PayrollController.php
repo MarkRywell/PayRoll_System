@@ -119,19 +119,19 @@ class PayrollController extends Controller
      * Display the specified resource.
      */
     public function show(int $user_id)
-    {
+    {   
         return PayRoll::getPayRoll($user_id);
     }
 
     public function showLatest(int $user_id)
-    {
-        $payroll =  PayRoll::getLatestPayRoll($user_id);
+    {   
+        $payroll = PayRoll::getLatestPayRoll($user_id);
 
         if(!$payroll) {
             return response()->json();
         }
         
-        $salary = Salary::getSalaryByPayrollId($payroll->id);
+        $salary = Salary::getSalaryLatest($payroll->id);
 
         $deduction = Deduction::getDeductionBySalaryId($salary->id);
 
