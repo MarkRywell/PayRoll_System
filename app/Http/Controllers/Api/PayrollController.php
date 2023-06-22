@@ -70,10 +70,6 @@ class PayrollController extends Controller
 
         $cash_advance = $request['cash_advance'] ? $request['cash_advance'] : 0;
 
-        // if(is_null($request['cash_advance'])) {
-        //     $cash_advance = $request['cash_advance'];
-        // }
-
         $gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary;
 
         $deducted_gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary - $cash_advance;
