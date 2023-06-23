@@ -56,11 +56,11 @@ class UserController extends Controller
 
         $user = $request->user();
         
-        if($user->role_id == 1) {
-            $user = User::get(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
+        if($user->role_id == 2) {
+            $user = $user->only(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
         }
         else {
-            $user = $user->only(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
+            $user = User::get(['id', 'name', 'email', 'position', 'contact_number', 'role_id', 'photo']);
         }
         
         if($user)
@@ -122,14 +122,17 @@ class UserController extends Controller
     public function getRate(int $id)
     {
         $rate = User::getRate($id);
-
         return $rate;
     }
     
 
+    public function getPhoto($photo)
+    {
+        return response()->file(storage_path("app/public/uploads/$photo"));
+    }
+
     public function updateRate(Request $request, int $id)
     {   
-
         $validator = Validator::make($request->all(), [
             'rate' => 'required|numeric'
         ]);

@@ -38,7 +38,6 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::group(['middleware' => ['permission']], function () {
         Route::post('/register', [AuthController::class, 'register']);
-        
         Route::prefix('users')->group(function () {
             Route::put('/rate/{id}', [UserController::class, 'updateRate']);
             Route::get('/rate/{id}', [UserController::class, 'getRate']);
@@ -56,14 +55,19 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::prefix('salary')->group(function () {
         Route::get('/{id}', [SalaryController::class, 'show']);
+        Route::get('/', [SalaryController::class, 'index']);
+    });
+
+    Route::prefix('address')->group(function () {
+        Route::get('/{id}', [AddressController::class, 'show']);
+        Route::post('/', [AddressController::class, 'store']);
     });
 
     Route::get('/profile/{id}', [UserController::class, 'profile']);
     Route::get('/payroll/{id}', [PayrollController::class, 'show']);
+    Route::get('/payroll/latest/{id}', [PayrollController::class, 'showLatest']);
     Route::get('/getUser', [UserController::class, 'getUser']);
     
-    Route::post('/address', [AddressController::class, 'store']);
-
 });
 
 Route::get('/unauthorized', function () {
@@ -72,6 +76,8 @@ Route::get('/unauthorized', function () {
         'message' => 'Unauthorized'
     ], 404);
 })->name('unauthorized');
+
+Route::get('/getPhoto/{photo}', [UserController::class, 'getPhoto']);
 
 Route::get('/', [UserController::class, 'index']);
 

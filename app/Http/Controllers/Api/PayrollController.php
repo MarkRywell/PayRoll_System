@@ -68,7 +68,11 @@ class PayrollController extends Controller
 
         $overtime_salary = ($request['rate'] * 1.25) * $request['total_hours_overtime'];
 
+        $cash_advance = $request['cash_advance'] ? $request['cash_advance'] : 0;
+
         $gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary;
+
+        $deducted_gross_salary = (($request['rate'] * 8)* $request['working_days']) + $overtime_salary - $cash_advance;
         
         $payroll = PayRoll::createPayRoll($request);
 
@@ -76,9 +80,11 @@ class PayrollController extends Controller
             return response()->json($responseData, 400);
         }
 
-        $deduction = DeductionController::calculateDeductions($gross_salary);
+        $deduction = DeductionController::calculateDeductions($deducted_gross_salary);
+        
 
-        $net_salary = $gross_salary - $deduction['total_deduction'];
+        $net_salary = $deducted_gross_salary - $deduction['total_deduction'];
+        $deduction['total_deduction'] = $deduction['total_deduction'] + $cash_advance;
 
         $salary = [
             'payroll_id' => $payroll->id,
@@ -91,6 +97,7 @@ class PayrollController extends Controller
         $salary = Salary::createSalary($salary);
 
         $deduction['salary_id'] = $salary->id;
+        $deduction['cash_advance'] = $cash_advance;
 
         $deduction = Deduction::createDeduction($deduction);
 
@@ -108,6 +115,31 @@ class PayrollController extends Controller
      * Display the specified resource.
      */
     public function show(int $user_id)
+    {   
+        return PayRoll::getPayRoll($user_id);
+    }
+
+    public function showLatest(int $user_id)
+    {   
+        $payroll = PayRoll::getLatestPayRoll($user_id);
+
+        if(!$payroll) {
+            return response()->json();
+        }
+        
+        $salary = Salary::getSalaryLatest($payroll->id);
+
+        $deduction = Deduction::getDeductionBySalaryId($salary->id);
+
+        $data = [
+            'payroll' => $payroll,
+            'salary' => $salary,
+            'deduction' => $deduction[0]
+        ];
+        return $data;
+    }
+
+    public function getOwnPayroll(int $user_id)
     {
         return PayRoll::getPayRoll($user_id);
     }

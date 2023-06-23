@@ -17,9 +17,9 @@ class PermissionMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        return $request->user()->role_id == 1 ? $next($request) : response([
+        return $request->user()->role_id == 2 ? response([
             'status' => 'error',
             'message' => 'Unauthorized'
-        ], 404);
+        ], 404) : $next($request);
     }
 }

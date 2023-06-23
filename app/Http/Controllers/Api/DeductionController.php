@@ -23,8 +23,108 @@ class DeductionController extends Controller
     {     
         $tax = 0;
 
-        $sss = $gross_salary * 0.045;
+        $sss = 0;
 
+        if($gross_salary < 4250) {
+            $sss = 180;
+        }
+        elseif($gross_salary >= 4250 && $gross_salary <= 4749.99) {
+            $sss = 202.5;
+        }
+        elseif($gross_salary >= 4750 && $gross_salary <= 5249.99) {
+            $sss = 225;
+        }
+        elseif($gross_salary >= 5250 && $gross_salary <= 5749.99) {
+            $sss = 247.5;
+        }
+        elseif($gross_salary >= 5750 && $gross_salary <= 6249.99) {
+            $sss = 270;
+        }
+        elseif($gross_salary >= 6250 && $gross_salary <= 6749.99) {
+            $sss = 292.5;
+        }
+        elseif($gross_salary >= 6750 && $gross_salary <= 7249.99) {
+            $sss = 315;
+        }
+        elseif($gross_salary >= 7250 && $gross_salary <= 7749.99) {
+            $sss = 337.5;
+        }
+        elseif($gross_salary >= 7750 && $gross_salary <= 8249.99) {
+            $sss = 360;
+        }
+        elseif($gross_salary >= 8250 && $gross_salary <= 8749.99) {
+            $sss = 382.5;
+        }
+        elseif($gross_salary >= 8750 && $gross_salary <= 9249.99) {
+            $sss = 405;
+        }
+        elseif($gross_salary >= 9250 && $gross_salary <= 9749.99) {
+            $sss = 427.5;
+        }
+        elseif($gross_salary >= 9750 && $gross_salary <= 10249.99) {
+            $sss = 450;
+        }
+        elseif($gross_salary >= 10250 && $gross_salary <= 10749.99) {
+            $sss = 472.5;
+        }
+        elseif($gross_salary >= 10750 && $gross_salary <= 11249.99) {
+            $sss = 495;
+        }
+        elseif($gross_salary >= 11250 && $gross_salary <= 11749.99) {
+            $sss = 517.5;
+        }
+        elseif($gross_salary >= 11750 && $gross_salary <= 12249.99) {
+            $sss = 540;
+        }
+        elseif($gross_salary >= 12250 && $gross_salary <= 12749.99) {
+            $sss = 562.5;
+        }
+        elseif($gross_salary >= 12750 && $gross_salary <= 13249.99) {
+            $sss = 585;
+        }
+        elseif($gross_salary >= 13250 && $gross_salary <= 13749.99) {
+            $sss = 607.5;
+        }
+        elseif($gross_salary >= 13750 && $gross_salary <= 14249.99) {
+            $sss = 630;
+        }
+        elseif($gross_salary >= 14250 && $gross_salary <= 14749.99) {
+            $sss = 652.5;
+        }
+        elseif($gross_salary >= 14750 && $gross_salary <= 15249.99) {
+            $sss = 675;
+        }
+        elseif($gross_salary >= 15250 && $gross_salary <= 15749.99) {
+            $sss = 697.5;
+        }
+        elseif($gross_salary >= 15750 && $gross_salary <= 16249.99) {
+            $sss = 720;
+        }
+        elseif($gross_salary >= 16250 && $gross_salary <= 16749.99) {
+            $sss = 742.5;
+        }
+        elseif($gross_salary >= 16750 && $gross_salary <= 17249.99) {
+            $sss = 765;
+        }
+        elseif($gross_salary >= 17250 && $gross_salary <= 17749.99) {
+            $sss = 787.5;
+        }
+        elseif($gross_salary >= 17750 && $gross_salary <= 18249.99) {
+            $sss = 810;
+        }
+        elseif($gross_salary >= 18250 && $gross_salary <= 18749.99) {
+            $sss = 832.5;
+        }
+        elseif($gross_salary >= 18750 && $gross_salary <= 19249.99) {
+            $sss = 855;
+        }
+        elseif($gross_salary >= 19250 && $gross_salary <= 19749.99) {
+            $sss = 877.5;
+        }
+        elseif($gross_salary >= 19750) {
+            $sss = 900;
+        }
+        
         if($gross_salary >= 5000) {
             $pagibig = $gross_salary * 0.03;
         }

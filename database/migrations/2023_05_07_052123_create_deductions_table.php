@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('deductions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('salary_id')->constrained('salaries')->onDelete('cascade')->onUpdate('cascade');
+            $table->double('cash_advance', 8, 2);
             $table->double('sss', 8, 2);
             $table->double('pagibig', 8, 2);
             $table->double('philhealth', 8, 2);
