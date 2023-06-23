@@ -79,6 +79,9 @@ class UserController extends Controller
     public function profile($id)
     {
         $user = User::getUserbyId($id);
+
+        if(!$user) return response(['message' => 'User not found']);
+
         return response($user[0]);
     }
 
