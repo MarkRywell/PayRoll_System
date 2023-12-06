@@ -159,7 +159,7 @@ class AuthController extends Controller
             return response($responseData, 400);
         }
 
-        $credentials = request(['email', 'password']);
+        $credentials = request(['email']);
 
         $user = User::getUserbyEmail($credentials);
 
