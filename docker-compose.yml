@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+    php-fpm:
+        build:
+            context: .
+            dockerfile: docker/php/Dockerfile
+        volumes:
+            - .:/var/www/html
+        ports:
+            - "8000:8001"
+        networks:
+            - backend
+
+    nginx:
+        image: nginx:latest
+        ports:
+            - "80:80"
+        volumes:
+            - .:/var/www/html
+            - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php-fpm
+        networks:
+            - backend
+
+    mysql:
+        build:
+            context: .
+            dockerfile: docker/mysql/Dockerfile
+        environment:
+            MYSQL_ROOT_PASSWORD: payroll123 # Change this to your desired root password
+            MYSQL_DATABASE: payroll # Change this to your desired database name
+           
+        volumes:
+            - mysql_data:/var/lib/mysql
+        ports:
+            - "3306:3306"
+        networks:
+            - backend
+
+networks:
+    backend:
+
+
+volumes:
+    mysql_data:
